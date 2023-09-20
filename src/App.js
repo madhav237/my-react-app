@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import './App.css';
 
 const simulatedAPICall = () => {
   return new Promise((resolve) => {
@@ -77,31 +78,49 @@ const RewardsCalculator = () => {
   const totalPointsPerCustomer = calculateTotalRewardPoints(rewardData);
 
   return (
-    <div>
-      <h1>Reward Points Calculator</h1>
+    <div className="calculator-container">
+      <h1 style={{ color: '#27ae60' }}>Reward Points Calculator</h1>
       <div>
         {Object.keys(rewardData).map((month) => (
-          <div key={month}>
-            <h2>Reward Points for {month}:</h2>
-            <ul>
-              {rewardData[month].map((entry, index) => (
-                <li key={index}>
-                  Customer {entry.customerId}: {entry.points} points
-                </li>
-              ))}
-            </ul>
+          <div key={month} className="table-container">
+            <h2 className="month-heading">Reward Points for {month}:</h2>
+            <table>
+              <thead>
+                <tr>
+                  <th>Customer ID</th>
+                  <th>Points</th>
+                </tr>
+              </thead>
+              <tbody>
+                {rewardData[month].map((entry, index) => (
+                  <tr key={index}>
+                    <td>Customer {entry.customerId}</td>
+                    <td><span style={{ color: '#e67e22' }}>{entry.points}</span></td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
         ))}
       </div>
-      <div>
-        <h2>Total Reward Points per Customer:</h2>
-        <ul>
-          {Object.keys(totalPointsPerCustomer).map((customerId) => (
-            <li key={customerId}>
-              Customer {customerId}: {totalPointsPerCustomer[customerId]} points
-            </li>
-          ))}
-        </ul>
+      <div className="table-container">
+        <h2 style={{ color: '#f39c12' }}>Total Reward Points per Customer:</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Customer ID</th>
+              <th>Total Points</th>
+            </tr>
+          </thead>
+          <tbody>
+            {Object.keys(totalPointsPerCustomer).map((customerId) => (
+              <tr key={customerId}>
+                <td>Customer {customerId}</td>
+                <td><span style={{ color: '#e74c3c' }}>{totalPointsPerCustomer[customerId]}</span></td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
     </div>
   );
